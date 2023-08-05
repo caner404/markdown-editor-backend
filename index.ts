@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import AppError from "./utils/appError";
 import { globalErrHandler } from "./controllers/errorController";
-
+import { router as markdownRouter } from "./routes/markdownRoutes";
 dotenv.config();
 
 export const app: Express = express();
@@ -16,10 +16,8 @@ if (process.env.NODE_ENV === "development") {
 }
 
 // 3) Routers mouting
-/*
-app.use("/api/v1/tours", tourRouter);
-app.use("/api/v1/users", userRouter);
-*/
+
+app.use("/api/v1/markdowns", markdownRouter);
 
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
