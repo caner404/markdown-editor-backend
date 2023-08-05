@@ -4,11 +4,14 @@ import morgan from "morgan";
 import AppError from "./utils/appError";
 import { globalErrHandler } from "./controllers/errorController";
 import { router as markdownRouter } from "./routes/markdownRoutes";
+import cors from "cors";
+
 dotenv.config();
 
 export const app: Express = express();
 //1. Midldewares
 //Middlware order in code is important .defines execution order -> needs be to always before othes routes
+app.use(cors());
 app.use(express.json());
 
 if (process.env.NODE_ENV === "development") {
