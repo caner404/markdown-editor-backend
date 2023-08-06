@@ -1,0 +1,109 @@
+openapi: 3.0.1
+info:
+  title: a minimal OpenAPI documentation for the markdown API
+  version: 0.0.1
+paths:
+  /api/v1/markdowns:
+    get:
+      summary: Get all markdowns
+      responses:
+        "200":
+          description: Everyhting went fine
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MarkdownResultAll"
+        "400":
+          description: Somehting went wrong
+    post:
+      summary: Create markdown
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MarkdownCreate"
+
+      responses:
+        "201":
+          description: Everyhting went fine
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MarkdownResult"
+
+  /api/v1/markdown/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    get:
+      summary: Get single markdown
+      responses:
+        "200":
+          description: Everyhting went fine
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MarkdownResult"
+
+    patch:
+      summary: update markdown
+      responses:
+        "200":
+          description: Everyhting went fine
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MarkdownResult"
+
+    delete:
+      summary: Delete Markdown
+      responses:
+        "204":
+          description: nothing should be returned
+
+components:
+  schemas:
+    MarkdownCreate:
+      type: object
+      properties:
+        title:
+          type: string
+        text:
+          type: string
+    MarkdownResultAll:
+      type: object
+      properties:
+        result:
+          type: number
+        status:
+          type: string
+        data:
+          type: object
+          properties:
+            markdowns:
+              type: array
+              items:
+                $ref: "#/components/schemas/MarkdownResponse"
+    MarkdownResult:
+      type: object
+      properties:
+        status:
+          type: string
+        data:
+          $ref: "#/components/schemas/MarkdownResponse"
+    MarkdownResponse:
+      type: object
+      properties:
+        _id:
+          type: string
+        title:
+          type: string
+        text:
+          type: string
+        createdAt:
+          type: string
+          format: date-time

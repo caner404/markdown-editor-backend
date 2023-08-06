@@ -20,4 +20,8 @@ const markdownSchema = new Schema<IMarkdown>({
   },
 });
 
+markdownSchema.set("toJSON", {
+  virtuals: true,
+});
+
 export const Markdown = model<IMarkdown>("Markdown", markdownSchema);
